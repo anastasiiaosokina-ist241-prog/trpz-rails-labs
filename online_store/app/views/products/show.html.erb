@@ -1,0 +1,41 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @product %>
+
+<div>
+  <%= link_to "Edit this product", edit_product_path(@product) %> |
+  <%= link_to "Back to products", products_path %>
+
+  <%= button_to "Destroy this product", @product, method: :delete %>
+</div>
+
+<hr>
+<h2>Відгуки про товар</h2>
+
+<% @product.reviews.each do |review| %>
+  <% if review.persisted? %>
+    <p>
+      <strong><%= review.author %>:</strong>
+      <%= review.body %>
+    </p>
+
+    <%= button_to "Видалити", product_review_path(@product, review),
+        method: :delete %>
+  <% end %>
+<% end %>
+
+<h3>Залишити відгук</h3>
+
+<%= form_with model: [@product, Review.new] do |form| %>
+  <p>
+    <%= form.label :author, "Ваше ім'я" %><br>
+    <%= form.text_field :author, required: true %>
+  </p>
+
+  <p>
+    <%= form.label :body, "Ваш відгук" %><br>
+    <%= form.text_area :body, required: true %>
+  </p>
+
+  <%= form.submit "Додати відгук" %>
+<% end %>

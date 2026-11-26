@@ -1,0 +1,35 @@
+<h1><%= @post.title %></h1>
+
+<p><%= @post.body %></p>
+
+<%= link_to "Повернутися до статей", posts_path %>
+
+<hr>
+<h2>Коментарі</h2>
+
+<% @post.comments.each do |comment| %>
+  <% if comment.persisted? %>
+    <p>
+      <strong><%= comment.commenter %>:</strong>
+      <%= comment.body %>
+      <%= button_to "Видалити", post_comment_path(@post, comment),
+          method: :delete %>
+    </p>
+  <% end %>
+<% end %>
+
+<h2>Додати коментар</h2>
+
+<%= form_with model: [@post, Comment.new] do |form| %>
+  <p>
+    <%= form.label :commenter, "Ваше ім'я" %><br>
+    <%= form.text_field :commenter %>
+  </p>
+
+  <p>
+    <%= form.label :body, "Коментар" %><br>
+    <%= form.text_area :body %>
+  </p>
+
+  <%= form.submit "Додати коментар" %>
+<% end %>
