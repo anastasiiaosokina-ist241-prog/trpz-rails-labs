@@ -1,0 +1,23 @@
+<h1>Створення нової статті</h1>
+
+<% if @post.errors.any? %>
+  <% @post.errors.full_messages.each do |message| %>
+    <div style="color: red;">
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= form_with scope: :post, url: posts_path, local: true do |form| %>
+  <p>
+    <%= form.label :title, "Назва статті" %><br>
+    <%= form.text_field :title %>
+  </p>
+
+  <p>
+    <%= form.label :body, "Текст статті" %><br>
+    <%= form.text_area :body %>
+  </p>
+
+  <%= form.submit "Створити статтю" %>
+<% end %>
